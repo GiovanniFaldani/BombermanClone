@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DestructibleWall : MonoBehaviour
+public class DestructibleWall : Wall
 {
     [SerializeField] private int hp = 1;
 
@@ -12,6 +12,9 @@ public class DestructibleWall : MonoBehaviour
 
     private void HealthCheck()
     {
-        if (hp <= 0) Destroy(this.gameObject);
+        if (hp <= 0) {
+            grid.GetGridSnap(transform.position).built = false;
+            Destroy(this.gameObject); 
+        }
     }
 }

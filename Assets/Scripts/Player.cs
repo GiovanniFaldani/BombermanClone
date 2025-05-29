@@ -31,12 +31,12 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         // Only allow cardinal movement
-        if (x != 0) y = 0;
-        if (y != 0) x = 0;
+        //if (x != 0) y = 0;
+        //else if (y != 0) x = 0;
 
         Vector3 direction = new Vector3(x, 0, y).normalized;
         RaycastHit hit;
-        Physics.Raycast(transform.position, direction, out hit, 0.25f); // raycast radius of capsule
+        Physics.Raycast(transform.position, direction, out hit, 0.5f); // raycast radius of capsule
 
         // avoid moving when near walls
         if (hit.collider != null)
@@ -49,8 +49,11 @@ public class Player : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Enemy"))
+        {
+            GameManager.Instance.GameOver();
+        }
     }
 }
