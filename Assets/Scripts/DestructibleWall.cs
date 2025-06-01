@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class DestructibleWall : Wall
+public class DestructibleWall : Wall, IDamageable
 {
-    [SerializeField] private int hp = 1;
+    [SerializeField] private int health = 1;
 
     public void TakeDamage(int damage)
     {
-        hp -= damage;
+        health -= damage;
         HealthCheck();
     }
 
-    private void HealthCheck()
+    public void HealthCheck()
     {
-        if (hp <= 0) {
+        if (health <= 0) {
             grid.GetGridSnap(transform.position).built = false;
-            Destroy(this.gameObject); 
+            Destroy(gameObject); 
         }
     }
 }

@@ -27,6 +27,17 @@ public class MovementGrid : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                print("(X: " + x + " Y: "+ y + ") Built: " + grid[x, y].built);
+            }
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         float displayDelta = 0.1f;

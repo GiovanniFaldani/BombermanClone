@@ -132,4 +132,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionDistance: 3
-  fireSquarePrefab: {fileID: 0}
+  fireSquarePrefab: {fileID: 2238014406336232142, guid: 9516a24c8212ef448a07f4260d95927a, type: 3}

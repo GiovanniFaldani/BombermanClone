@@ -1,7 +1,8 @@
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
+    [SerializeField] private int health = 1;
     [SerializeField] private float moveSpeed = 10;
     [SerializeField] float bombCooldownTime = 1;
     [SerializeField] private float explosionTimer = 2;
@@ -38,9 +39,14 @@ public class Player : MonoBehaviour
 
     private void Movement()
     {
+        // lock to a single axis
+        if (Mathf.Abs(x) > Mathf.Abs(y)) y = 0;
+        else x = 0;
+
         Vector3 direction = new Vector3(x, 0, y).normalized;
+        Vector3 originY = new Vector3(transform.position.x, 0, transform.position.y + 0.25f);
         RaycastHit hit;
-        Physics.Raycast(transform.position, direction, out hit, 0.5f); // raycast radius of capsule
+        Physics.SphereCast(transform.position, 0.4f, direction, out hit, 0.1f);
 
         // avoid moving when near walls
         if (hit.collider != null)
@@ -70,7 +76,18 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        HealthCheck();
+    }
+
+    public void HealthCheck()
+    {
+        if (health <= 0)
         {
             GameManager.Instance.GameOver();
         }
